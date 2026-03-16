@@ -1,429 +1,694 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yaso Portfolio</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body class="content" id="textToChange">
-    <nav id="desktop-nav">
-      <div class="logo">Yasotha Ramamoorthy</div>
-      <div>
-        <ul class="nav-links">
-          <li><a href="#about">About</a></li>
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><button class="btn btn-color-1" onclick="changeFontColor()">Change Color</button></li>
-        </ul>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yasotha Ramamoorthy – Software Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --cream2: #ede7d9;
+      --cream3: #e4ddd0;
+      --ink: #1a1612;
+      --ink2: #3d3530;
+      --muted: #8c7f74;
+      --accent: #c8522a;
+      --accent2: #2a6b5c;
+      --accent3: #e8b84b;
+      --border: #d4ccc0;
+      --white: #fdfaf5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--ink);
+      font-family: 'Syne', sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── GRID LINES background ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(to right, rgba(26,22,18,0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(26,22,18,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(245,240,232,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem; font-weight: 700;
+      color: var(--ink); letter-spacing: -0.01em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      padding: 8rem 4rem 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative; z-index: 1;
+    }
+    .hero-left { }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 0.8rem;
+      margin-bottom: 1.8rem;
+    }
+    .hero-eyebrow-line {
+      width: 40px; height: 1.5px; background: var(--accent);
+    }
+    .hero-eyebrow-text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.73rem; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--accent); font-weight: 500;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 6vw, 5.8rem);
+      line-height: 1.05; letter-spacing: -0.025em;
+      font-weight: 700; margin-bottom: 0.2rem;
+    }
+    h1 .last { display: block; font-style: italic; color: var(--accent); }
+    .hero-role {
+      font-size: 0.88rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--muted);
+      margin: 1.2rem 0 1.6rem;
+    }
+    .hero-desc {
+      font-size: 1rem; color: var(--ink2); max-width: 440px;
+      font-weight: 400; line-height: 1.8; margin-bottom: 2.5rem;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 1.8rem; font-size: 0.82rem;
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      text-decoration: none; transition: all 0.22s; cursor: pointer;
+      font-family: 'Syne', sans-serif;
+    }
+    .btn-primary {
+      background: var(--ink); color: var(--cream);
+      border: 1.5px solid var(--ink);
+    }
+    .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+    .btn-outline {
+      background: transparent; color: var(--ink);
+      border: 1.5px solid var(--ink);
+    }
+    .btn-outline:hover { background: var(--ink); color: var(--cream); }
+
+    /* Hero right: big decorative block */
+    .hero-right {
+      position: relative; display: flex;
+      justify-content: center; align-items: center;
+    }
+    .hero-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      padding: 2.5rem; width: 100%; max-width: 380px;
+      position: relative;
+      box-shadow: 8px 8px 0 var(--ink);
+    }
+    .hero-card::before {
+      content: '"'; font-family: 'Playfair Display', serif;
+      font-size: 8rem; line-height: 1; color: var(--cream3);
+      position: absolute; top: -1.5rem; left: 1.5rem;
+      pointer-events: none;
+    }
+    .hero-card-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-style: italic;
+      color: var(--ink2); line-height: 1.7; margin-bottom: 1.5rem;
+    }
+    .hero-card-divider { height: 1px; background: var(--border); margin-bottom: 1.4rem; }
+    .hero-card-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .hcs-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 700; color: var(--accent); line-height: 1;
+    }
+    .hcs-label { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; margin-top: 0.2rem; }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 5.5rem 4rem; position: relative; z-index: 1; }
+    .section-inner { max-width: 1000px; margin: 0 auto; }
+
+    .section-header {
+      display: flex; align-items: baseline; gap: 1.2rem;
+      margin-bottom: 3rem; padding-bottom: 1rem;
+      border-bottom: 1.5px solid var(--ink);
+    }
+    .section-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem; color: var(--accent); letter-spacing: 0.1em;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      letter-spacing: -0.02em; font-weight: 700;
+      flex: 1;
+    }
+
+    /* alternating bg */
+    .bg-white { background: var(--white); }
+    .bg-ink { background: var(--ink); color: var(--cream); }
+    .bg-ink .section-header { border-bottom-color: var(--cream3); }
+    .bg-ink h2 { color: var(--cream); }
+    .bg-ink .section-num { color: var(--accent3); }
+    .bg-ink .muted { color: var(--cream3); }
+
+    /* ── ABOUT ── */
+    .about-layout { display: grid; grid-template-columns: 3fr 2fr; gap: 4rem; align-items: start; }
+    .about-text p {
+      font-size: 1.02rem; color: var(--ink2); margin-bottom: 1.1rem;
+      line-height: 1.85; font-weight: 400;
+    }
+    .about-text p strong { color: var(--ink); font-weight: 700; }
+    .about-aside { }
+    .aside-block {
+      background: var(--cream2); border: 1px solid var(--border);
+      padding: 1.4rem; margin-bottom: 1rem;
+      border-left: 3px solid var(--accent);
+    }
+    .aside-title {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem;
+    }
+    .aside-val { font-size: 1.05rem; font-weight: 600; color: var(--ink); }
+    .aside-sub { font-size: 0.82rem; color: var(--muted); margin-top: 0.15rem; }
+
+    /* ── EXPERIENCE ── */
+    .exp-timeline { }
+    .exp-item {
+      display: grid; grid-template-columns: 160px 1fr;
+      gap: 2.5rem; margin-bottom: 3rem; padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .exp-item:last-child { border-bottom: none; margin-bottom: 0; }
+    .exp-left { }
+    .exp-date-range {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem; color: var(--muted); line-height: 1.6;
+      letter-spacing: 0.04em;
+    }
+    .exp-badge {
+      display: inline-block;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; padding: 0.25rem 0.6rem;
+      margin-top: 0.7rem;
+    }
+    .badge-current {
+      background: var(--accent); color: #fff;
+    }
+    .badge-past {
+      background: transparent; color: var(--muted);
+      border: 1px solid var(--border);
+    }
+    .exp-right { }
+    .exp-role {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem; font-weight: 700;
+      margin-bottom: 0.3rem; letter-spacing: -0.01em;
+    }
+    .exp-company {
+      font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent2);
+      margin-bottom: 1.1rem;
+    }
+    .exp-list { list-style: none; }
+    .exp-list li {
+      font-size: 0.95rem; color: var(--ink2);
+      padding: 0.35rem 0 0.35rem 1.4rem;
+      position: relative; border-left: 1px solid var(--border);
+      margin-left: 0.4rem; padding-left: 1.2rem;
+    }
+    .exp-list li::before {
+      content: ''; position: absolute; left: -4px; top: 50%;
+      transform: translateY(-50%);
+      width: 7px; height: 7px;
+      background: var(--accent); border-radius: 50%;
+    }
+
+    /* dark bg overrides for exp */
+    .bg-ink .exp-item { border-bottom-color: rgba(255,255,255,0.1); }
+    .bg-ink .exp-date-range { color: var(--cream3); }
+    .bg-ink .exp-role { color: var(--cream); }
+    .bg-ink .exp-company { color: var(--accent3); }
+    .bg-ink .exp-list li { color: rgba(245,240,232,0.75); border-left-color: rgba(255,255,255,0.15); }
+    .bg-ink .exp-list li::before { background: var(--accent3); }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem;
+    }
+    .skill-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      padding: 1.6rem; transition: all 0.22s;
+    }
+    .skill-card:hover {
+      border-color: var(--accent);
+      box-shadow: 4px 4px 0 var(--accent);
+      transform: translate(-2px,-2px);
+    }
+    .skill-cat {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 0.8rem;
+    }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .stag {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem; padding: 0.3rem 0.7rem;
+      background: var(--cream2); color: var(--ink2);
+      border: 1px solid var(--border); letter-spacing: 0.04em;
+    }
+    .stag.hot {
+      background: var(--ink); color: var(--cream);
+      border-color: var(--ink);
+    }
+    .stag.new {
+      background: var(--accent2); color: #fff;
+      border-color: var(--accent2);
+    }
+
+    /* ── EDUCATION ── */
+    .edu-block {
+      background: var(--white); border: 1.5px solid var(--border);
+      padding: 2.5rem; display: flex;
+      justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 2rem;
+      box-shadow: 6px 6px 0 var(--cream3);
+    }
+    .edu-degree-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem; margin-bottom: 0.4rem;
+    }
+    .edu-inst { color: var(--accent2); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .edu-period {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem; color: var(--muted); margin-top: 0.4rem;
+    }
+    .edu-gpa-wrap { text-align: center; }
+    .edu-gpa {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem; font-weight: 700;
+      color: var(--accent); line-height: 1;
+    }
+    .edu-gpa-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem;
+    }
+    .contact-item {
+      background: var(--white); border: 1.5px solid var(--border);
+      padding: 1.8rem; text-decoration: none; color: var(--ink);
+      display: flex; align-items: center; gap: 1.3rem;
+      transition: all 0.22s;
+    }
+    .contact-item:hover {
+      border-color: var(--accent);
+      box-shadow: 5px 5px 0 var(--accent);
+      transform: translate(-2px,-2px);
+    }
+    .ci-icon {
+      width: 46px; height: 46px;
+      background: var(--cream2); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.25rem; flex-shrink: 0;
+    }
+    .ci-label {
+      font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 0.2rem;
+    }
+    .ci-val { font-size: 0.92rem; font-weight: 600; word-break: break-all; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink); color: var(--cream3);
+      text-align: center; padding: 2.2rem 4rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem; letter-spacing: 0.06em;
+      border-top: 3px solid var(--accent);
+    }
+
+    /* ── DIVIDERS ── */
+    .full-divider { border: none; border-top: 1.5px solid var(--border); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-left { animation: slideUp 0.8s 0.1s ease both; }
+    .hero-right { animation: slideUp 0.8s 0.35s ease both; }
+
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 800px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 4rem; }
+      .hero-right { display: none; }
+      .about-layout { grid-template-columns: 1fr; gap: 2rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.8rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .edu-block { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 500px) {
+      .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Yasotha<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span class="hero-eyebrow-text">Software Developer · Zoho Corporation</span>
+    </div>
+    <h1>
+      Yasotha
+      <span class="last">Ramamoorthy</span>
+    </h1>
+    <p class="hero-role">C++ Developer · Java Developer · Zoho Corporation</p>
+    <p class="hero-desc">
+      Building robust, scalable software at Zoho Corporation —
+      from deep Windows native agent development in C++ to modern Java-powered backend engineering.
+    </p>
+    <div class="hero-ctas">
+      <a href="#experience" class="btn btn-primary">View Experience →</a>
+      <a href="#contact" class="btn btn-outline">Contact Me</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card">
+      <p class="hero-card-quote">
+        Motivated by complex problems, driven by clean code, and committed to shipping features that matter at scale.
+      </p>
+      <div class="hero-card-divider"></div>
+      <div class="hero-card-stats">
+        <div>
+          <div class="hcs-num">2+</div>
+          <div class="hcs-label">Years at Zoho</div>
+        </div>
+        <div>
+          <div class="hcs-num">8.78</div>
+          <div class="hcs-label">CGPA</div>
+        </div>
+        <div>
+          <div class="hcs-num">2</div>
+          <div class="hcs-label">Tech Stacks</div>
+        </div>
+        <div>
+          <div class="hcs-num">1</div>
+          <div class="hcs-label">Enterprise Product</div>
+        </div>
       </div>
-    </nav>
-    <nav id="hamburger-nav">
-      <div class="logo">Yasotha Ramamoorthy</div>
-      <div class="hamburger-menu">
-        <div class="hamburger-icon" onclick="toggleMenu()">
-          <span></span>
-          <span></span>
-          <span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="bg-white">
+  <div class="section-inner fade-in">
+    <div class="section-header">
+      <span class="section-num">01 —</span>
+      <h2>About Me</h2>
+    </div>
+    <div class="about-layout">
+      <div class="about-text">
+        <p>I am a <strong>Software Developer at Zoho Corporation</strong>, working on an enterprise-grade endpoint management product used by organisations worldwide.</p>
+        <p>I began my career as a <strong>C++ Developer</strong>, focusing on <strong>Windows native agent development</strong> — designing and optimising agent-side modules that handle endpoint management at scale. My work involved direct interaction with Windows internals such as Event Viewer, Registry, and low-level system APIs.</p>
+        <p>Since <strong>October 2025</strong>, I have moved into a <strong>Java development role</strong> within the same team, taking on backend feature development and applying a systems-thinking approach to higher-level engineering challenges.</p>
+        <p>I thrive in <strong>collaborative, agile environments</strong> and take pride in writing clean, well-reviewed code that holds up reliably in production conditions.</p>
+      </div>
+      <div class="about-aside">
+        <div class="aside-block">
+          <div class="aside-title">Current Role</div>
+          <div class="aside-val">Software Developer</div>
+          <div class="aside-sub">Zoho Corporation</div>
         </div>
-        <div class="menu-links">
-          <li><a href="#about" onclick="toggleMenu()">About</a></li>
-          <li><a href="#experience" onclick="toggleMenu()">Experience</a></li>
-          <li><a href="#projects" onclick="toggleMenu()">Projects</a></li>
-          <li><a href="#contact" onclick="toggleMenu()">Contact</a></li>
+        <div class="aside-block">
+          <div class="aside-title">Current Focus</div>
+          <div class="aside-val">Java Development</div>
+          <div class="aside-sub">Since October 2025</div>
+        </div>
+        <div class="aside-block">
+          <div class="aside-title">Location</div>
+          <div class="aside-val">Chennai, Tamil Nadu</div>
+          <div class="aside-sub">India</div>
+        </div>
+        <div class="aside-block">
+          <div class="aside-title">Education</div>
+          <div class="aside-val">B.E. · CGPA 8.78</div>
+          <div class="aside-sub">Bannari Amman Institute of Tech</div>
         </div>
       </div>
-    </nav>
-    <section id="profile">
-      <div class="section__pic-container">
-        <img src="./assets/profile-pic.png" alt="John Doe profile picture" />
-      </div>
-      <div class="section__text">
-        <p class="section__text__p1">Hello, I'm</p>
-        <h1 class="title">Yasotha Ramamoorthy</h1>
-        <p class="section__text__p2">Software Developer</p>
-        <div class="btn-container">
-          <button
-            class="btn btn-color-2"
-            onclick="window.open('./assets/201SE144_YASOTHA R.pdf')"
-          >
-            Download CV
-          </button>
-          <button class="btn btn-color-1" onclick="location.href='./#contact'">
-            Contact Info
-          </button>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="bg-ink">
+  <div class="section-inner fade-in">
+    <div class="section-header">
+      <span class="section-num">02 —</span>
+      <h2>Experience</h2>
+    </div>
+    <div class="exp-timeline">
+
+      <!-- Phase 2 -->
+      <div class="exp-item">
+        <div class="exp-left">
+          <div class="exp-date-range">Oct 2025<br>— Present</div>
+          <div class="exp-badge badge-current">● Current</div>
         </div>
-        <div id="socials-container">
-          <img
-            src="./assets/linkedin.png"
-            alt="My LinkedIn profile"
-            class="icon"
-            onclick="location.href='www.linkedin.com/in/yasotha-r'"
-          />
-          <img
-            src="./assets/github.png"
-            alt="My Github profile"
-            class="icon"
-            onclick="location.href='https://github.com/YasothaRamamoorthy'"
-          />
-        </div>
-      </div>
-    </section>
-    <section id="about">
-      <p class="section__text__p1">Get To Know More</p>
-      <h1 class="title">About Me</h1>
-      <div class="section-container">
-        <div class="section__pic-container">
-          <img
-            src="./assets/about-pic.jpg"
-            alt="Profile picture"
-            class="about-pic"
-          />
-        </div>
-        <div class="about-details-container">
-          <div class="about-containers">
-            <div class="details-container">
-              <img
-                src="./assets/education.png"
-                alt="Education icon"
-                class="icon"
-              />
-              <h3>Education</h3>
-              <p>B.E. Bachelors of Engineering <br/> Information Science and Engineering</p>
-            </div>
-          </div>
-          <div class="text-container">
-            <p>
-              A motivated and enthusiastic individual ready to join as a 
-              Software Developer to give better solutions and
-              products to consumers while also contributing in the 
-              development and implementation of applications.
-              I am looking for a difficult and dynamic IT profession that
-              combines their desire for learning, analytical mindset, and
-              programming skills. My goal is to succeed in data science and
-              full-stack development by combining technical expertise with
-              strategic methods to address difficulties and deliver
-              meaningful results.
-            </p>
-          </div>
-        </div>
-      </div>
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#skills'"
-      />
-    </section>
-    <section id="skills">
-      <p class="section__text__p1">Explore My</p>
-      <h1 class="title">Skills</h1>
-      <div class="experience-details-container">
-        <div class="about-containers">
-          <div class="details-container">
-            <h2 class="experience-sub-title">Programming language</h2>
-            <div class="article-container">
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>C & C++</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Java</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>JavaScript</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Python</h3>
-                  <p>Basic</p>
-                </div>
-              </article>
-            </div>
-            
-          </div>
-          <div class="details-container">
-            <h2 class="experience-sub-title">Backend Technologies</h2>
-            <div class="article-container">
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>SQL</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Mongo DB(NoSQL)</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Node JS</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Git</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-            </div>
-            
-          </div>
-        
-          <div class="details-container">
-            <h2 class="experience-sub-title">Core Subjects</h2>
-            <div class="article-container">
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>DSA</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>DBMS</h3>
-                  <p>Intermediate</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Operating Systems</h3>
-                  <p>Basic</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Computer Networking</h3>
-                  <p>Basic</p>
-                </div>
-              </article>
-            </div>
-            
-          </div>
-          <div class="details-container">
-            <h2 class="experience-sub-title">Microsoft Tools</h2>
-            <div class="article-container">
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3> Power Bi</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>Excel</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-              <article>
-                <img
-                  src="./assets/checkmark.png"
-                  alt="Experience icon"
-                  class="icon"
-                />
-                <div>
-                  <h3>PowerPoint</h3>
-                  <p>Experienced</p>
-                </div>
-              </article>
-            </div>
-          </div>
-          
-        </div>
-      </div>
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#projects'"
-      />
-    </section>
-    <section id="projects">
-      <p class="section__text__p1">Browse My Recent</p>
-      <h1 class="title">Projects</h1>
-      <div class="experience-details-container">
-        <div class="about-containers">
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="./assets/project-1.jpg"
-                alt="Project 1"
-                class="project-img"
-              />
-            </div>
-            <h2 class="experience-sub-title project-title">Stock Trend Prediction</h2>
-            <div class="btn-container">
-              <button
-                class="btn btn-color-2 project-btn"
-                onclick="location.href='https://github.com/YasothaRamamoorthy/Stock_trend_prediction'"
-              >
-                Github Link
-              </button>
-            
-            </div>
-          </div>
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="./assets/project-2.jpg"
-                alt="Project 2"
-                class="project-img"
-              />
-            </div>
-            <h2 class="experience-sub-title project-title">Expense App</h2>
-            <div class="btn-container">
-              <button
-                class="btn btn-color-2 project-btn"
-                onclick="location.href='https://github.com/YasothaRamamoorthy/expense_app'"
-              >
-                Github Link
-              </button>
-            </div>
-          </div>
-          <div class="details-container color-container">
-            <div class="article-container">
-              <img
-                src="./assets/project-3.png"
-                alt="Project 3"
-                class="project-img"
-              />
-            </div>
-            <h2 class="experience-sub-title project-title">Menu and booking food</h2>
-            <div class="btn-container">
-              <button
-                class="btn btn-color-2 project-btn"
-                onclick="location.href='https://github.com/YasothaRamamoorthy/product_detail_display'"
-              >
-                Github
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <img
-        src="./assets/arrow.png"
-        alt="Arrow icon"
-        class="icon arrow"
-        onclick="location.href='./#contact'"
-      />
-    </section>
-    <section id="contact">
-      <p class="section__text__p1">Get in Touch</p>
-      <h1 class="title">Contact Me</h1>
-      <div class="contact-info-upper-container">
-        <div class="contact-info-container">
-          <img
-            src="./assets/email.png"
-            alt="Email icon"
-            class="icon contact-icon email-icon"
-          />
-          <p><a href="mailto:yasotha1708@gmail.com">yasotha1708@gmail.com</a></p>
-        </div>
-        <div class="contact-info-container">
-          <img
-            src="./assets/linkedin.png"
-            alt="LinkedIn icon"
-            class="icon contact-icon"
-          />
-          <p><a href="https://www.linkedin.com/in/yasotha-r">LinkedIn</a></p>
-        </div>
-      </div>
-    </section>
-    <footer>
-      <nav>
-        <div class="nav-links-container">
-          <ul class="nav-links">
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact">Contact</a></li>
+        <div class="exp-right">
+          <div class="exp-role">Software Developer — Java</div>
+          <div class="exp-company">Zoho Corporation</div>
+          <ul class="exp-list">
+            <li>Moved into Java-based development within the same team, broadening scope from low-level native engineering to backend feature development.</li>
+            <li>Developing and enhancing backend modules using core Java, with a focus on applying strong OOP principles and sound system design.</li>
+            <li>Drawing on prior Windows agent experience to build efficient, well-integrated Java solutions that complement existing native components.</li>
+            <li>Collaborating with cross-functional teams to ensure compatibility between new Java modules and the existing C++ agent layer.</li>
+            <li>Actively deepening Java expertise while delivering meaningful contributions to production-grade features.</li>
           </ul>
         </div>
-      </nav>
-      <p>Copyright &#169; 2024 Yasotha Ramamoorthy. All Rights Reserved.</p>
-    </footer>
-    <script src="script.js"></script>
-  </body>
+      </div>
+
+      <!-- Phase 1 -->
+      <div class="exp-item">
+        <div class="exp-left">
+          <div class="exp-date-range">Apr 2024<br>— Oct 2025</div>
+          <div class="exp-badge badge-past">Past</div>
+        </div>
+        <div class="exp-right">
+          <div class="exp-role">C++ Developer — Windows Native Agent</div>
+          <div class="exp-company">Zoho Corporation</div>
+          <ul class="exp-list">
+            <li>Designed, developed, and optimised agent-side modules for an enterprise endpoint management product, improving reliability and performance at scale.</li>
+            <li>Built Windows native solutions in C++, ensuring modules were robust, scalable, and capable of handling real-world enterprise workloads.</li>
+            <li>Worked closely with cross-functional teams to implement new features and address performance-critical issues in a timely manner.</li>
+            <li>Participated in code reviews and debugging sessions that contributed to measurable improvements in product stability and code quality.</li>
+            <li>Used core Windows tools — including Event Viewer and Registry — for in-depth troubleshooting and agent-level diagnostics.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="bg-white">
+  <div class="section-inner fade-in">
+    <div class="section-header">
+      <span class="section-num">03 —</span>
+      <h2>Technical Skills</h2>
+    </div>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <div class="skill-cat">Languages</div>
+        <div class="skill-tags">
+          <span class="stag hot">C++</span>
+          <span class="stag new">Java</span>
+          <span class="stag hot">C</span>
+          <span class="stag">C#</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-cat">Windows Native</div>
+        <div class="skill-tags">
+          <span class="stag">Event Viewer</span>
+          <span class="stag">Registry</span>
+          <span class="stag">Agent Dev</span>
+          <span class="stag">System APIs</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-cat">Databases</div>
+        <div class="skill-tags">
+          <span class="stag hot">SQL</span>
+          <span class="stag hot">MongoDB</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-cat">CS Fundamentals</div>
+        <div class="skill-tags">
+          <span class="stag">OOP</span>
+          <span class="stag">OS</span>
+          <span class="stag">DBMS</span>
+          <span class="stag">DSA</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-cat">Tools</div>
+        <div class="skill-tags">
+          <span class="stag hot">Git</span>
+          <span class="stag">Visual Studio</span>
+          <span class="stag">Power BI</span>
+          <span class="stag">Excel</span>
+        </div>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-cat">Soft Skills</div>
+        <div class="skill-tags">
+          <span class="stag">Agile</span>
+          <span class="stag">Code Review</span>
+          <span class="stag">Debugging</span>
+          <span class="stag">Collaboration</span>
+        </div>
+      </div>
+
+    </div>
+    <p style="margin-top:1.4rem; font-size:0.76rem; font-family:'IBM Plex Mono',monospace; color:var(--muted);">
+      <span style="background:var(--ink);color:var(--cream);padding:0.15rem 0.5rem;">Core</span> &nbsp;
+      <span style="background:var(--accent2);color:#fff;padding:0.15rem 0.5rem;">Active / New</span>
+    </p>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner fade-in">
+    <div class="section-header">
+      <span class="section-num" style="color:var(--accent);">04 —</span>
+      <h2>Education</h2>
+    </div>
+    <div class="edu-block">
+      <div>
+        <div class="edu-degree-title">Bachelor of Engineering</div>
+        <div class="edu-inst">Bannari Amman Institute of Technology</div>
+        <div class="edu-period">Oct 2020 — Apr 2024 &nbsp;·&nbsp; Computer Science & Engineering</div>
+      </div>
+      <div class="edu-gpa-wrap">
+        <div class="edu-gpa">8.78</div>
+        <div class="edu-gpa-label">CGPA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="bg-white">
+  <div class="section-inner fade-in">
+    <div class="section-header">
+      <span class="section-num">05 —</span>
+      <h2>Get In Touch</h2>
+    </div>
+    <div class="contact-grid">
+      <a href="mailto:yasotha1708@gmail.com" class="contact-item">
+        <div class="ci-icon">✉️</div>
+        <div>
+          <div class="ci-label">Email</div>
+          <div class="ci-val">yasotha1708@gmail.com</div>
+        </div>
+      </a>
+      <a href="tel:+919345821345" class="contact-item">
+        <div class="ci-icon">📱</div>
+        <div>
+          <div class="ci-label">Phone</div>
+          <div class="ci-val">+91 93458 21345</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/yasotha-r/" target="_blank" class="contact-item">
+        <div class="ci-icon">💼</div>
+        <div>
+          <div class="ci-label">LinkedIn</div>
+          <div class="ci-val">linkedin.com/in/yasotha-r</div>
+        </div>
+      </a>
+      <a href="https://github.com/yasotha.r" target="_blank" class="contact-item">
+        <div class="ci-icon">🐙</div>
+        <div>
+          <div class="ci-label">GitHub</div>
+          <div class="ci-val">github.com/yasotha.r</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  © 2025 Yasotha Ramamoorthy &nbsp;·&nbsp; Designed with purpose &nbsp;·&nbsp; All rights reserved
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+</script>
+</body>
 </html>
